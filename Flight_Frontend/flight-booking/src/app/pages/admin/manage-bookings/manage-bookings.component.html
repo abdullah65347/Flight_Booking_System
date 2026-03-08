@@ -1,0 +1,55 @@
+<div class="p-8 page-enter">
+    <div class="mb-8">
+        <h1 class="font-display font-bold text-3xl text-slate-900 dark:text-white">Manage Bookings</h1>
+        <p class="text-slate-500 mt-1">{{ bookings().length }} total bookings</p>
+    </div>
+
+    @if (loading()) {
+    <app-loader message="Loading bookings..." />
+    } @else if (bookings().length === 0) {
+    <app-empty-state title="No bookings yet" message="No flights have been booked." />
+    } @else {
+    <div class="card overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b border-slate-100 dark:border-slate-700/50">
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                            Booking Code</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                            User</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                            Flight</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                            Route</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                            Seats</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                            Date</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
+                    @for (b of bookings(); track b.bookingCode) {
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                        <td class="px-4 py-3 font-mono text-xs text-brand-500 font-semibold">{{ b.bookingCode }}</td>
+                        <td class="px-4 py-3 text-sm text-slate-700 dark:text-slate-300">{{ b.userName || b.userEmail ||
+                            '—' }}</td>
+                        <td class="px-4 py-3">
+                            <div class="text-xs font-semibold text-slate-900 dark:text-white">{{ b.flightNumber }}</div>
+                            <div class="text-xs text-slate-400">{{ b.flightCode }}</div>
+                        </td>
+                        <td class="px-4 py-3 text-sm text-slate-600 dark:text-slate-300">
+                            {{ b.source || '—' }} → {{ b.destination || '—' }}
+                        </td>
+                        <td class="px-4 py-3">
+                            <span class="badge-blue">{{ b.numberOfSeats }} seat(s)</span>
+                        </td>
+                        <td class="px-4 py-3 text-xs text-slate-500">{{ formatDate(b.bookingDate) }}</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    }
+</div>

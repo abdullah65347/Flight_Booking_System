@@ -1,0 +1,38 @@
+<div class="p-8 page-enter">
+    <div class="mb-8">
+        <h1 class="font-display font-bold text-3xl text-slate-900 dark:text-white">Dashboard</h1>
+        <p class="text-slate-500 mt-1">Welcome back, {{ auth.currentUser()?.name }}</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8 animate-stagger">
+        @for (stat of stats(); track stat.label) {
+        <div class="card p-5">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-sm font-medium text-slate-500 dark:text-slate-400">{{ stat.label }}</span>
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-xl" [class]="stat.bg">{{
+                    stat.icon }}</div>
+            </div>
+            <div class="font-display font-bold text-3xl text-slate-900 dark:text-white">{{ stat.value }}</div>
+            <div class="text-xs text-emerald-500 mt-1">{{ stat.sub }}</div>
+        </div>
+        }
+    </div>
+
+    <!-- Quick Links -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 animate-stagger">
+        @for (link of quickLinks; track link.label) {
+        <a [routerLink]="link.path"
+            class="card p-5 hover:-translate-y-1 hover:shadow-glow-sm transition-all duration-300 group flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0" [class]="link.bg">
+                {{ link.icon }}</div>
+            <div>
+                <div
+                    class="font-display font-semibold text-slate-900 dark:text-white group-hover:text-brand-500 transition-colors">
+                    {{ link.label }}</div>
+                <div class="text-xs text-slate-400 mt-0.5">{{ link.desc }}</div>
+            </div>
+        </a>
+        }
+    </div>
+</div>
